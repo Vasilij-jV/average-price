@@ -26,6 +26,10 @@ def main():
     # calculates and displays the average closing price of shares for a given period
     dd.calculate_and_display_average_price(stock_data)
 
+    # fluctuations_price
+    threshold = 0.5
+    dd.notify_if_strong_fluctuations(stock_data, threshold)
+
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 
