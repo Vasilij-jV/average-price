@@ -27,7 +27,7 @@ def main():
     dd.calculate_and_display_average_price(stock_data)
 
     # fluctuations_price
-    threshold = 0.5
+    threshold = 5
     dd.notify_if_strong_fluctuations(stock_data, threshold)
 
     # Plot the data
