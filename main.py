@@ -30,6 +30,11 @@ def main():
     threshold = 5
     dd.notify_if_strong_fluctuations(stock_data, threshold)
 
+    # Exporting object DataFrame in file
+    # Тест, проверяющий создание нового файла в 'export_test.py'
+    filename = 'save_dataframe.csv'
+    dplt.export_data_to_csv(stock_data, filename)
+
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 
