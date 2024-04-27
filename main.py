@@ -35,6 +35,13 @@ def main():
     filename = 'save_dataframe.csv'
     dplt.export_data_to_csv(stock_data, filename)
 
+    # Вызов функций для расчёта технических индикаторов
+    data_rsi = dd.calculate_rsi_from_yfinance(ticker)
+    data_macd = dd.calculate_macd_from_yfinance(ticker)
+
+    dplt.plot_technical_indicators(data_rsi, ticker, 'RSI')
+    dplt.plot_technical_indicators(data_macd, ticker, 'MACD')
+
     # Plot the data
     dplt.create_and_save_plot(stock_data, ticker, period)
 

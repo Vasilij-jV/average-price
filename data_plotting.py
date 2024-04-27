@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd
+import numpy as np
 
 
 def create_and_save_plot(data, ticker, period, filename=None):
@@ -31,7 +32,24 @@ def create_and_save_plot(data, ticker, period, filename=None):
     print(f"График сохранен как {filename}")
 
 
+# Экспорт данных в CSV
 def export_data_to_csv(data, filename):
     if isinstance(data, pd.DataFrame) and isinstance(filename, str):
         data.to_csv(filename, index=False)
-        
+
+
+def plot_technical_indicators(data, ticker, indicator):
+    plt.figure(figsize=(14, 7))
+
+    if indicator == 'RSI':
+        plt.plot(data['RSI'], label='RSI')
+        plt.title('RSI Chart for ' + ticker)
+    elif indicator == 'MACD':
+        plt.plot(data['MACD'], label='MACD', color='blue')
+        plt.plot(data['Signal Line'], label='Signal Line', color='red')
+        plt.title('MACD Chart for ' + ticker)
+
+    plt.legend()
+    plt.savefig(f"{ticker}_{indicator}_chart.png")
+    print(f"{indicator} график сохранён, как {ticker}_{indicator}_chart.png")
+

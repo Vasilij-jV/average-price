@@ -35,4 +35,25 @@ def notify_if_strong_fluctuations(data, threshold):
         print(f'Порог колебания цены - ({difference_between_min_max}) превышает допустимое значение - ({threshold})\n')
 
 
+def calculate_rsi_from_yfinance(ticker, window=14):
+    data = yf.Ticker(ticker).history(period='1y')
+    delta = data['Close'].diff()
+    gain = (delta.where(delta > 0, 0)).rolling(window=window).mean()
+    loss = (-delta.where(delta < 0, 0)).rolling(window=window).mean()
+    rs = gain / loss
+    rsi = 100 - (100 / (1 + rs))
+    data['RSI'] = rsi
+    return data
 
+
+def calculate_macd_from_yfinance(ticker, short_window=12, long_window=26, signal_window=9):
+    data = yf.Ticker(ticker).history(period='1y')
+    short_ema = data['Close'].ewm(span=short_window, adjust=False).mean()
+    long_ema = data['Close'].ewm(span=long_window, adjust=False).mean()
+
+    macd = short_ema - long_ema
+    signal_line = macd.ewm(span=signal_window, adjust=False).mean()
+
+    data['MACD'] = macd
+    data['Signal Line'] = signal_line
+    return data
